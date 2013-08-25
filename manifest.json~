@@ -1,0 +1,40 @@
+/*
+Copyright (c) <year> ICRL
+
+See the file license.txt for copying permission.
+*/
+{
+  "manifest_version": 2,
+
+  "name": "Page Section Marker",
+  "description": "Bookmark sections in a page and go back to them easily.",
+  "version": "0.1",
+
+  "background": { 
+	"scripts": ["background.js"] 
+  },
+
+  "page_action": {
+	"default_icon": "mark.png",
+	"default_title": "Page Section Marker"
+  },	
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      "css": ["style.css", "contextmenu/jquery.contextMenu.css"],
+      "js": ["jquery-1.7.min.js", 
+	     "jquery.qtip-1.0.0-rc3.custom/jquery.qtip-1.0.0-rc3.min.js", 
+	     "contextmenu/jquery.contextMenu.js"]
+    }
+  ], 
+
+  "web_accessible_resources": [
+	"mark.png"
+  ],
+
+  "permissions": [
+	"tabs", 
+	"http://*/*"
+  ]
+}
