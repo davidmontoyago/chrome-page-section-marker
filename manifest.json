@@ -16,11 +16,17 @@
 
   "content_scripts": [
     {
-      "matches": ["http://*/*"],
-      "css": ["style.css", "contextmenu/jquery.contextMenu.css"],
-      "js": ["jquery-1.7.min.js", 
-	     "jquery.qtip-1.0.0-rc3.custom/jquery.qtip-1.0.0-rc3.min.js", 
-	     "contextmenu/jquery.contextMenu.js"]
+      "matches": ["http://*/*", "https://*/*"],
+      "css":[
+		"style.css", 
+		"contextmenu/jquery.contextMenu.css",
+		"jquery.qtip2-2.1.1.basic/jquery.qtip.min.css"
+	   ],
+      "js":[
+		 "jquery-1.8.3.min.js", 
+	     "jquery.qtip2-2.1.1.basic/jquery.qtip.min.js", 
+	     "contextmenu/jquery.contextMenu.js"
+	   ]
     }
   ], 
 
@@ -30,6 +36,7 @@
 
   "permissions": [
 	"tabs", 
-	"http://*/*"
+	"http://*/*",
+	"https://*/*"
   ]
 }
