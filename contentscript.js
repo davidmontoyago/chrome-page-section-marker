@@ -24,11 +24,18 @@ See the file license.txt for copying permission.
 	}
 
 	function createBar() {
-		var $bar = $('<div id="line-markers-bar" style="display:none;"></div>');	
-		$bar.height($(document).height());			
+		var $bar = $('<div>', {
+				id: 'line-markers-bar',
+				height: $(document).height()
+			}).
+		css({
+			'display': 'none',
+			'cursor': 'pointer'
+		});
+		
 		// guides for bookmarking
-		$bar.append('<hr id="topLineGuide" style="display:none; position:absolute;"/>','<hr id="bottomLineGuide" style="display:none; position:absolute;"/>');	
-		$bar.css('cursor','pointer');
+		$bar.append($('<hr>', {id: 'topLineGuide'}).css({'display': 'none','position': 'absolute'}),
+				    $('<hr>', {id: 'bottomLineGuide'}).css({'display': 'none','position': 'absolute'}));	
 		$('body').append($bar);	
 	
 		$bar.on("click", function(event){
@@ -55,17 +62,18 @@ See the file license.txt for copying permission.
 			$('#topLineGuide, #bottomLineGuide').show();
 		});
 		$bar.on("mouseout", function(event){
-			$('#topLineGuide').hide();		
-			$('#bottomLineGuide').hide();
+			$('#topLineGuide, #bottomLineGuide').hide();
 		});
 		toggleBar();
 	}
 
 	function createContextMenu() {
-		var $contextmenu = $('<ul id="page-section-marker-menu" class="contextMenu">'+							
-								'<li><a href="#delete">Delete All Bookmarks</a></li>' +
-								'<li class="separator"><b>Go To...</b></li>' +
-							 '</ul>');
+		var $contextmenu = $('<ul>', {
+				id: 'page-section-marker-menu',
+				class: 'contextMenu' 
+			}).
+		append('<li><a href="#delete">Delete All Bookmarks</a></li>',
+			   '<li class="separator"><b>Go To...</b></li>');
 		$('body').append($contextmenu);
 	
 		$('#line-markers-bar').contextMenu({
@@ -91,10 +99,15 @@ See the file license.txt for copying permission.
 	
 		//add goto option to the menu	
 		var bookmarkMenuOption = "bookmark-menu-option-" + bookmarkConsec;
-		var $menuOption = createMenuOption(bookmarkMenuOption, parseInt(bookmarkPosTop.replace("px", "")), bookmarkConsec);
+		var $menuOptionLink = createMenuOptionLink(bookmarkMenuOption, parseInt(bookmarkPosTop.replace("px", "")), bookmarkConsec);
+		var $menuOption = $('<li>').append($menuOptionLink);
 		$('#page-section-marker-menu').append($menuOption);
 			
 		var $markInput = createMarkInput(bookmarkConsec);
+		$markInput.on('change', function(event) {
+			$menuOptionLink.text($(this).val());		
+		});
+		
 		$mark.qtip({
 			content: $markInput,
 			hide: { 
@@ -118,7 +131,13 @@ See the file license.txt for copying permission.
 	}
 	
 	function createMark(top) {	
-		return $('<img src="'+MARK_IMG_URL+'" style="position:absolute;top:'+top+'"></img>');	
+		return $('<img>', {
+			src: MARK_IMG_URL 
+		}).
+		css({
+			'position': 'absolute',
+			'top': top
+		});
 	}
 	
 	function createMarkInput(initialName) {
@@ -130,13 +149,12 @@ See the file license.txt for copying permission.
 		val(initialName); 
 	}
 	
-	function createMenuOption(optionId, ref, name) {
-		$menuOptionLink = $('<a>', {
+	function createMenuOptionLink(optionId, ref, name) {
+		return $('<a>', {
 				id: optionId,
 				href: '#'+ref
 			}
 		).text(name);
-		return $('<li>').append($menuOptionLink);
 	}
 	
 	init();
