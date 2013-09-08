@@ -11,7 +11,7 @@ See the file license.txt for copying permission.
 	var bookmarkConsec = 0;
 	
 	function init() {
-		if ($('#line-markers-bar').length) {		
+		if ($('#markers-bar').length) {		
 			toggleBar();
 		} else {	
 			createBar();
@@ -20,12 +20,12 @@ See the file license.txt for copying permission.
 	}
 
 	function toggleBar() {
-		$('#line-markers-bar').animate({width:'toggle'},'slow');
+		$('#markers-bar').animate({width:'toggle'},'slow');
 	}
 
 	function createBar() {
 		var $bar = $('<div>', {
-				id: 'line-markers-bar',
+				id: 'markers-bar',
 				height: $(document).height()
 			}).
 		css({
@@ -76,12 +76,12 @@ See the file license.txt for copying permission.
 			   '<li class="separator"><b>Go To...</b></li>');
 		$('body').append($contextmenu);
 	
-		$('#line-markers-bar').contextMenu({
+		$('#markers-bar').contextMenu({
 			menu:'page-section-marker-menu'
 	    },
 		function(action, el, pos) {				
 			if (action == "delete") {
-				$('#line-markers-bar').find('img').remove();
+				$('#markers-bar').find('img').remove();
 				$('#page-section-marker-menu li').has('a[href!="#delete"]').remove();		
 				bookmarkConsec = 0;
 			} else {			
@@ -117,6 +117,10 @@ See the file license.txt for copying permission.
 			position: {
 				my: 'left center',
 				at: 'right center'
+			},
+			style: { 
+				def: false,
+				classes: 'mark-input qtip-rounded'
 			}
 		});	
 	    
